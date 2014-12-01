@@ -399,10 +399,7 @@ An example of various conventions.
 <a name="acknowledgements"></a>
 ## Acknowledgements
 
-Thanks to everyone who has provided translations and to all those who
-contributed to [idiomatic.js](https://github.com/rwldrn/idiomatic.js). It was a
-source of inspiration, quotations, and guidelines.
-
+This document is a mashup of our own norms, mixed with standards from https://github.com/necolas/idiomatic-css & http://codeguide.co/
 
 <a name="license"></a>
 ## License
@@ -410,7 +407,7 @@ source of inspiration, quotations, and guidelines.
 _Principles of writing consistent, idiomatic CSS_ by Nicolas Gallagher is
 licensed under the [Creative Commons Attribution 3.0 Unported
 License](http://creativecommons.org/licenses/by/3.0/). This applies to all
-documents and translations in this repository.
+documents in this repository.
 
 Based on a work at
 [github.com/necolas/idiomatic-css](https://github.com/necolas/idiomatic-css).
