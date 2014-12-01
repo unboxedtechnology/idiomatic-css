@@ -48,7 +48,7 @@ readability.
 * Choose between soft indents (spaces) or real tabs. Stick to your choice
   without fail. (Preference: spaces)
 * If using spaces, choose the number of characters used per indentation level.
-  (Preference: 4 spaces)
+  (Preference: 2 spaces)
 
 Tip: configure your editor to "show invisibles" or to automatically remove
 end-of-line whitespace.
@@ -118,7 +118,7 @@ in useful diffs and blames.
 * Include a single space before the opening brace of a ruleset.
 * Include one declaration per line in a declaration block.
 * Use one level of indentation for each declaration.
-* Include a single space after the colon of a declaration.
+* Include a single space after `:` of a declaration.
 * Use lowercase and shorthand hex values, e.g., `#aaa`.
 * Use single or double quotes consistently. Preference is for double quotes,
   e.g., `content: ""`.
@@ -136,19 +136,19 @@ in useful diffs and blames.
 .selector-1,
 .selector-2,
 .selector-3[type="text"] {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    display: block;
-    font-family: helvetica, arial, sans-serif;
-    color: #333;
-    background: #fff;
-    background: linear-gradient(#fff, rgba(0, 0, 0, 0.8));
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  font-family: helvetica, arial, sans-serif;
+  color: #333;
+  background: #fff;
+  background: linear-gradient(#fff, rgba(0, 0, 0, 0.8));
 }
 
 .selector-a,
 .selector-b {
-    padding: 10px;
+  padding: 10px;
 }
 ```
 
@@ -162,35 +162,45 @@ box-model) together.
 
 ```css
 .selector {
-    /* Positioning */
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  /* Positioning */
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-    /* Display & Box Model */
-    display: inline-block;
-    overflow: hidden;
-    box-sizing: border-box;
-    width: 100px;
-    height: 100px;
-    padding: 10px;
-    border: 10px solid #333;
-    margin: 10px;
+  /* Display & Box Model */
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  padding: 10px;
+  border: 10px solid #333;
+  margin: 10px;
 
-    /* Other */
-    background: #000;
-    color: #fff;
-    font-family: sans-serif;
-    font-size: 16px;
-    text-align: right;
+  /* Other */
+  background: #000;
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 16px;
+  text-align: right;
 }
 ```
 
 Larger teams may prefer the simplicity and ease-of-maintenance that comes with
 alphabetical ordering.
+
+Related property declarations should be grouped together in the following order:
+1. Positioning
+2. Box model
+3. Typographic
+4. Visual
+
+Positioning comes first because it can remove an element from the normal flow of the document and override box model related styles. The box model comes next as it dictates a component's dimensions and placement.
+
+Everything else takes place inside the component or without impacting the previous two sections, and thus they come last.
 
 #### Exceptions and slight deviations
 
@@ -212,11 +222,11 @@ be used; one example is shown below.
 ```css
 .selector {
     background-image:
-        linear-gradient(#fff, #ccc),
-        linear-gradient(#f3c, #4ec);
+      linear-gradient(#fff, #ccc),
+      linear-gradient(#f3c, #4ec);
     box-shadow:
-        1px 1px 1px #000,
-        2px 2px 1px 1px #ccc inset;
+      1px 1px 1px #000,
+      2px 2px 1px 1px #ccc inset;
 }
 ```
 
@@ -241,11 +251,11 @@ preprocessor in use. The following guidelines are in reference to Sass.
 
 ```scss
 .selector-1 {
-    @extend .other-rule;
-    @include clearfix();
-    @include box-sizing(border-box);
-    width: x-grid-unit(1);
-    // other declarations
+  @extend .other-rule;
+  @include clearfix();
+  @include box-sizing(border-box);
+  width: x-grid-unit(1);
+  // other declarations
 }
 ```
 
@@ -269,9 +279,9 @@ An example of various conventions.
  * Example HTML:
  *
  * <div class="grid">
- *     <div class="cell cell-3"></div>
- *     <div class="cell cell-3"></div>
- *     <div class="cell cell-3"></div>
+ *   <div class="cell cell-3"></div>
+ *   <div class="cell cell-3"></div>
+ *   <div class="cell cell-3"></div>
  * </div>
  */
 
@@ -285,9 +295,9 @@ An example of various conventions.
  */
 
 .grid {
-    height: 100%;
-    font-size: 0; /* 1 */
-    white-space: nowrap; /* 2 */
+  height: 100%;
+  font-size: 0; /* 1 */
+  white-space: nowrap; /* 2 */
 }
 
 /**
@@ -301,22 +311,22 @@ An example of various conventions.
  */
 
 .cell {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    box-sizing: border-box;
-    height: 100%;
-    padding: 0 10px; /* 1 */
-    border: 2px solid #333;
-    vertical-align: top;
-    white-space: normal; /* 2 */
-    font-size: 16px; /* 3 */
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0 10px; /* 1 */
+  border: 2px solid #333;
+  vertical-align: top;
+  white-space: normal; /* 2 */
+  font-size: 16px; /* 3 */
 }
 
 /* Cell states */
 
 .cell.is-animating {
-    background-color: #fffdec;
+  background-color: #fffdec;
 }
 
 /* Cell dimensions
@@ -333,7 +343,57 @@ An example of various conventions.
 
 .cell--detail,
 .cell--important {
-    border-width: 4px;
+  border-width: 4px;
+}
+```
+
+### Don't use `@import`
+
+Compared to `<link>`s, `@import` is slower, adds extra page requests, and can cause other unforeseen problems. Avoid them and instead opt for an alternate approach:
+
+* Use multiple `<link>` elements
+* Compile your CSS with a preprocessor like Sass or Less into a single file
+* Concatenate your CSS files with grunt/gulp etc
+
+```html
+<!-- Use link elements -->
+<link rel="stylesheet" href="core.css">
+
+<!-- Avoid @imports -->
+<style>
+  @import url("more.css");
+</style>
+```
+
+### Media query placement
+
+Place media queries as close to their relevant rule sets whenever possible. Don't bundle them all in a separate stylesheet or at the end of the document. Doing so only makes it easier for folks to miss them in the future. Here's a typical setup.
+
+```css
+.element { ... }
+.element-avatar { ... }
+.element-selected { ... }
+
+@media (min-width: 480px) {
+  .element { ...}
+  .element-avatar { ... }
+  .element-selected { ... }
+}
+```
+
+### Nesting in Less and Sass
+
+Avoid unnecessary nesting. Just because you can nest, doesn't mean you always should. Consider nesting only if you must scope styles to a parent and if there are multiple elements to be nested.
+
+```css
+// Without nesting
+.table > thead > tr > th { … }
+.table > thead > tr > td { … }
+
+// With nesting
+.table > thead > tr {
+  > th { … }
+  > td { … }
 }
 ```
 
