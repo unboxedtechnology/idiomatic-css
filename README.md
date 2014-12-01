@@ -14,7 +14,9 @@ contribute.
 2. [Whitespace](#whitespace)
 3. [Comments](#comments)
 4. [Format](#format)
-5. [Practical example](#example)
+5. [Naming conventions](#naming-conventions)
+6. [Selectors](#selectors)
+7. [Practical example](#example)
 
 [Acknowledgements](#acknowledgements)
 
@@ -44,11 +46,15 @@ Only one style should exist across the entire source of your code-base. Always
 be consistent in your use of whitespace. Use whitespace to improve
 readability.
 
-* _Never_ mix spaces and tabs for indentation.
+### Before you start a project
 * Choose between soft indents (spaces) or real tabs. Stick to your choice
   without fail. (Preference: spaces)
 * If using spaces, choose the number of characters used per indentation level.
   (Preference: 2 spaces)
+* _Never_ mix spaces and tabs for indentation.
+
+### Unboxed Norms
+2 space soft tabs
 
 Tip: configure your editor to "show invisibles" or to automatically remove
 end-of-line whitespace.
@@ -72,6 +78,7 @@ Comment style should be simple and consistent within a single code base.
 * Keep line-length to a sensible maximum, e.g., 80 columns.
 * Make liberal use of comments to break CSS code into discrete sections.
 * Use "sentence case" comments and consistent text indentation.
+* If you're going to use `#important`, make sure you add a comment explaining why.
 
 Tip: configure your editor to provide you with shortcuts to output agreed-upon
 comment patterns.
@@ -309,8 +316,85 @@ Avoid unnecessary nesting. Just because you can nest, doesn't mean you always sh
 }
 ```
 
+<a name="naming-conventions"></a>
+## 5. Naming conventions
+
+All strings in classes are delimited with a hyphen (-), like so:
+
+```css
+.page-head {}
+
+.sub-content {}
+```
+
+<a name="selectors"></a>
+## 6. Selectors
+
+Perhaps somewhat surprisingly, one of the most fundamental, critical aspects of writing maintainable and scalable CSS is selectors. Their specificity, their portability, and their reusability all have a direct impact on the mileage we will get out of our CSS, and the headaches it might bring us.
+
+### Selector Intent
+
+It is important to scope selectors correctly. Selector Intent is the process of deciding and defining what you want to style and how you will go about selecting it. For example, if you are wanting to style your website’s main navigation menu, a selector like this would be incredibly unwise:
+
+```css
+header ul {}
+```
+
+This selector’s intent is to style any `ul` inside any `header` element, whereas our intent was to style the site’s main navigation. This is poor Selector Intent: you can have any number of `header` elements on a page, and they in turn can house any number of uls, so a selector like this runs the risk of applying very specific styling to a very wide number of elements. This will result in having to write more CSS to undo the greedy nature of such a selector.
+
+A better approach would be a selector like:
+
+```css
+.site-nav {}
+```
+
+CSS cannot be encapsulated, it is inherently leaky, but we can mitigate some of these effects by not writing such globally-operating selectors: **your selectors should be as explicit and well reasoned as your reason for wanting to select something.**
+
+> "Tying your class name semantics tightly to the nature of the content has already reduced the ability of your architecture to scale or be easily put to use by other developers." - Nicolas Gallagher
+
+### Selector Performance
+
+Generally speaking, the longer a selector is (i.e. the more component parts) the slower it is, for example:
+
+```css
+body.home div.header ul {}
+```
+
+Is a far less efficient selector than:
+
+```css
+.primary-nav {}
+```
+
+This is because browsers read CSS selectors **right-to-left**. A browser will read the first selector as
+
+* find all `ul` elements in the DOM;
+* now check if they live anywhere inside an element with a class of `.header`;
+* next check that `.header` class exists on a `div` element;
+* now check that that all lives anywhere inside any elements with a class of `.home`;
+* finally, check that `.home` exists on a `body` element.
+
+The second, in contrast, is simply a case of the browser reading
+
+* find all the elements with a class of `.primary-nav`.
+
+To further compound the problem, we are using descendant selectors (e.g. `.foo .bar {}`). The upshot of this is that a browser is required to start with the rightmost part of the selector (i.e. `.bar`) and keep looking up the DOM indefinitely until it finds the next part (i.e. `.foo`). This could mean stepping up the DOM dozens of times until a match is found.
+
+This is just one reason why **nesting with preprocessors is often a false economy**; as well as making selectors unnecessarily more specific, and creating location dependency, it also creates more work for the browser.
+
+By using a child selector (e.g. `.foo > .bar {}`) we can make the process much more efficient, because this only requires the browser to look one level higher in the DOM, and it will stop regardless of whether or not it found a match.
+
+### Unboxed Norms
+
+* Select what you want explicitly, rather than relying on circumstance or coincidence.
+* Write selectors for reusability, so that you can work more efficiently and reduce waste and repetition.
+* Do not nest selectors unnecessarily, because this will increase specificity and affect where else you can use your styles.
+* Do not qualify selectors unnecessarily, as this will impact the number of different elements you can apply styles to.
+* Keep selectors as short as possible, in order to keep specificity down and performance up.
+* Be cautious of overwriting existing elements unless you're sure of the implications.
+
 <a name="example"></a>
-## 5. Practical example
+## 7. Practical example
 
 An example of various conventions.
 
